@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <hr>
+    <div class="col-md-12">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <div class="single-post">
+                <h2> {{ post.title }} </h2>
+                <img src="{{ post.photo.url }}" alt="{{ post.title }}">
+
+                <div>
+                    <span style="font-size:26px;">Posted by: </span>
+                    <span style="font-size:20px; color:#1090B4"> {{ post.author }} </span>
+                </div>
+                <div>
+                    <span style="font-size:26px;">Category: </span>
+                    <span style="font-size:20px; color:#4612B4"> <a href="{{ post.category.get_absolute_url }}">{{ post.category }} </a> </span>
+                </div>
+                <div>
+                    <span style="font-size:26px;">Slug: </span>
+                    <span style="font-size:20px; color:#1090B4"> {{ post.slug }} </span>
+                </div>
+                <div>
+                    <span style="font-size:26px;">Content: </span>
+                    <span style="font-size:20px; color:#1090B4"> {{ post.content|safe }} </span>
+                </div>
+                <div>
+                    <span style="font-size:26px;">Created_at: </span>
+                    <span style="font-size:20px; color:#1090B4"> {{ post.created_at }} </span>
+                </div>
+                <div>
+                    <span style="font-size:26px;">View: </span>
+                    <span style="font-size:20px; color:#1090B4"> {{ post.views }} </span>
+                </div>
+
+                <div>
+                    <span style="font-size:26px;">Tags: </span>
+                    {% for slug in post.tags.all %}
+                    <span style="font-size:20px; color:#1090B4"> {{ slug }},
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
