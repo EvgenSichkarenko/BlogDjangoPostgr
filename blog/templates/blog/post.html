@@ -1,49 +1,59 @@
 {% extends 'base.html' %}
+{% load sidebar %}
 
 {% block content %}
-<div class="row">
-    <hr>
-    <div class="col-md-12">
-        <div class="col-md-2"></div>
-        <div class="col-md-6">
-            <div class="single-post">
-                <h2> {{ post.title }} </h2>
-                <img src="{{ post.photo.url }}" alt="{{ post.title }}">
+<section class="single-blog-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="border-top">
+                    <div class="col-md-8" style="margin-top:40px">
+                        <div class="blog-area">
+                            <div class="blog-area-part">
+                                <div class="row">
+                                    <div class="blog-post-area-style">
+                                        <div class="col-md-6">
+                                            <div class="single-post">
+                                                <img src="{{post.photo.url}}" alt="{{post.title}}">
+                                                <h3><a href="{{post.get_absolute_url}}">{{post.title}}</a></h3>
 
-                <div>
-                    <span style="font-size:26px;">Posted by: </span>
-                    <span style="font-size:20px; color:#1090B4"> {{ post.author }} </span>
-                </div>
-                <div>
-                    <span style="font-size:26px;">Category: </span>
-                    <span style="font-size:20px; color:#4612B4"> <a href="{{ post.category.get_absolute_url }}">{{ post.category }} </a> </span>
-                </div>
-                <div>
-                    <span style="font-size:26px;">Slug: </span>
-                    <span style="font-size:20px; color:#1090B4"> {{ post.slug }} </span>
-                </div>
-                <div>
-                    <span style="font-size:26px;">Content: </span>
-                    <span style="font-size:20px; color:#1090B4"> {{ post.content|safe }} </span>
-                </div>
-                <div>
-                    <span style="font-size:26px;">Created_at: </span>
-                    <span style="font-size:20px; color:#1090B4"> {{ post.created_at }} </span>
-                </div>
-                <div>
-                    <span style="font-size:26px;">View: </span>
-                    <span style="font-size:20px; color:#1090B4"> {{ post.views }} </span>
-                </div>
+                                                <h4><span>Posted By: <span
+                                                        class="author-name">{{post.author}}</span></span>
+                                                </h4>
+                                                <h4><span>Category: <span class="author-name">
+                                                    <a href="{{post.category.get_absolute_url}}">{{post.category}} </a></span></span>
+                                                </h4>
+                                                <h4><span>Views: <span>{{post.views}}</span></span>
+                                                </h4>
+                                                <h4><span>{{post.created_at}}</span></h4>
+                                                {% if post.tags.exists %}
+                                                <h4><span>Tags: <span
+                                                        class="author-name">
+                                                    {% for it in post.tags.all %}
+                                                    <a href="{{it.get_absolute_url}}">{{it.title}}</a>
+                                                    {% endfor %}
 
-                <div>
-                    <span style="font-size:26px;">Tags: </span>
-                    {% for slug in post.tags.all %}
-                    <span style="font-size:20px; color:#1090B4"> {{ slug }},
-                    </span>
-                    {% endfor %}
+                                                </span></span>
+                                                </h4>
+                                                {% endif %}
+                                                <p><h4 >Content:</h4>{{post.content|safe}}</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="blog-area">
+                            {% tags_tpl %}
+                            {% popular %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}

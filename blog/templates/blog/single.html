@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load sidebar %}
 
 {% block content %}
 
@@ -7,10 +8,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="border-top">
+                <div class="border-top ">
                     <div class="col-md-8">
-                        <div class="blog-area">
+                        <div class="blog-area" style="margin-top: 40px; display: block">
                             <div class="blog-area-part">
+                                {% for quote in quotes %}
+                                <h2>{{ quote.title }}</h2>
                                 <div class="row">
                                     <div class="blog-post-area-style">
                                         {% for post in posts %}
@@ -30,12 +33,11 @@
                                         {% endfor %}
                                     </div>
                                 </div>
+                                <h3><i class="fa fa-quote-left" aria-hidden="true"></i>{{ quote.content }}<i
+                                        class="fa fa-quote-right" aria-hidden="true"></i></h3>
+                                {% endfor %}
                             </div>
 
-                            <!--                            <div class="ads-area">-->
-                            <!--                                <img src="{% static 'img/ads.jpg' %}" alt="">-->
-                            <!--                                <p>Your Ad Banner Goes Here</p>-->
-                            <!--                            </div>-->
                             <hr>
                             <div class="commententries">
                                 <h3>Comments</h3>
@@ -120,13 +122,13 @@
                             </div>
                             <form action="#" method="get">
                                 <div class="name">
-                                    <input type="text" name="" id="" placeholder="Name" class="name">
+                                    <input type="text" name="" placeholder="Name" class="name">
                                 </div>
                                 <div class="email">
-                                    <input type="email" name="" id="" placeholder="Email" class="email">
+                                    <input type="email" name="" placeholder="Email" class="email">
                                 </div>
                                 <div class="comment">
-                                    <input type="text" name="" id="" placeholder="Comment" class="comment">
+                                    <input type="text" name=""placeholder="Comment" class="comment">
                                 </div>
                                 <div class="post">
                                     <input type="submit" value="Post">
@@ -135,27 +137,9 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="newsletter">
-                            <h2 class="sidebar-title">Search</h2>
-                            <form action="#" method="post">
-                                <input type="email" name="" id="" placeholder="Email">
-                                <input type="submit" value="Subscribe">
-                            </form>
-                        </div>
-
-                        <div class="tags">
-                            <h2 class="sidebar-title">Tags</h2>
-                            {% for tag in tags %}
-                            <p><a href="#"> {{tag}} </a></p>
-                            {% endfor %}
-                        </div>
-                        <div class="newsletter">
-                            <h2 class="sidebar-title">Subscribe To oUR nEWSLETTER</h2>
-                            <form action="#" method="post">
-                                <input type="email" name="" id="" placeholder="Email">
-                                <input type="submit" value="Subscribe">
-                            </form>
-                        </div>
+                        {% search %}
+                        {% popular %}
+                        {% tags_tpl %}
                     </div>
                 </div>
             </div>

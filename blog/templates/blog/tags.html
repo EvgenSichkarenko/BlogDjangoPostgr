@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="border-top">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="blog-post-area-style">
+                            {% for post in posts %}
+                            <div class="col-md-6">
+                                <div class="single-post">
+                                    <img src="{{post.photo.url}}" alt="{{post.title}}">
+                                    <h3><a href="{{post.get_absolute_url}}">{{post.title}}</a></h3>
+                                    <h4><span>Posted By: <span
+                                            class="author-name">{{post.author}}</span></span>
+                                    </h4>
+                                    <hr>
+                                    <p>{{post.content|truncatewords:16|safe}}</p>
+                                    <hr>
+                                    <h4><span>{{post.created_at}}</span></h4>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<hr>
+{% endblock %}
+

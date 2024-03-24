@@ -39,3 +39,8 @@ class PostsAdmin(admin.ModelAdmin):
 
     def get_photo(self, obj):
         return mark_safe(f'<img src="{obj.photo.url}" width=150>')
+
+
+@admin.register(Quote)
+class QuoteAdmin(admin.ModelAdmin):
+    list_display = ('title', 'content')

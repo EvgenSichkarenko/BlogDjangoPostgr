@@ -26,6 +26,9 @@ class Tags(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('tags', kwargs={'slug': self.slug})
+
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
@@ -53,3 +56,16 @@ class Posts(models.Model):
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
         ordering = ['-created_at']
+
+
+class Quote(models.Model):
+    title = models.CharField(max_length=300)
+    content = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Цитата'
+        verbose_name_plural = 'Цитати'

@@ -1,0 +1,8 @@
+<div class="newsletter">
+    <h2 class="sidebar-title">Search...</h2>
+        <form action="{% url 'search' %}" method="get">
+            {% csrf_token %}
+            <input type="search" name="s"  placeholder="Search" style="margin-bottom: 5px">
+            <input type="submit" value="Search" style="width:100%">
+        </form>
+</div>
