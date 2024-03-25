@@ -69,3 +69,15 @@ class Quote(models.Model):
     class Meta:
         verbose_name = 'Цитата'
         verbose_name_plural = 'Цитати'
+
+
+class EmailSubs(models.Model):
+    email = models.EmailField(unique=True)
+    created_at = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'Подписчик'
+        verbose_name_plural = 'Подписчики'

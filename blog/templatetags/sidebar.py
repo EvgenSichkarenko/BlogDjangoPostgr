@@ -21,3 +21,5 @@ def search():
 def popular():
     posts = Posts.objects.order_by('-views')[:3]
     return {'posts': posts}
+
+

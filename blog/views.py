@@ -2,6 +2,7 @@ from django.db.models import F
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, View
 from .models import Category, Posts, Tags, Quote
+from .forms import EmailSubsForm
 
 
 # Create your views here.
@@ -37,7 +38,17 @@ class PostsViews(View):
         post.refresh_from_db()
 
         context = {
-            'post': post
+            'post': post,
+            'form': EmailSubsForm()
+        }
+
+        return render(request, 'blog/post.html', context)
+
+    def post(self, request):
+
+        form = EmailSubsForm(request.POST)
+        context = {
+            'form': form
         }
 
         return render(request, 'blog/post.html', context)

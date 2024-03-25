@@ -219,3 +219,11 @@ CKEDITOR_CONFIGS = {
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+
+EMAIL_HOST = 'smtp.mail.yahoo.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'evgen20@yahoo.com'
+EMAIL_HOST_PASSWORD = 'qlbnhowawgzkzoxz'
+EMAIL_USE_SSL = False
+EMAIL_USE_TLS = True

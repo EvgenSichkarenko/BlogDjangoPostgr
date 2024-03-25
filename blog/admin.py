@@ -45,3 +45,8 @@ class PostsAdmin(admin.ModelAdmin):
 @admin.register(Quote)
 class QuoteAdmin(admin.ModelAdmin):
     list_display = ('title', 'content')
+
+
+@admin.register(EmailSubs)
+class EmailSubscribers(admin.ModelAdmin):
+    list_display = ('email', 'created_at')

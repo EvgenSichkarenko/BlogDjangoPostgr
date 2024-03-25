@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from blog.models import EmailSubs
 
 
 class Register(UserCreationForm):
@@ -11,3 +12,11 @@ class Register(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2')
+
+
+class EmailSubsForm(forms.ModelForm):
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = EmailSubs
+        fields = ('email',)
