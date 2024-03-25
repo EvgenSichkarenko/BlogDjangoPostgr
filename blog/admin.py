@@ -32,6 +32,7 @@ class PostsAdmin(admin.ModelAdmin):
     form = PostAdminForm
     prepopulated_fields = {"slug": ("title",)}
     list_display = ('title', 'slug', 'views', 'created_at', 'category', 'get_photo')
+    readonly_fields = ('views',)
     save_on_top = True
     save_as = True
     list_filter = ('category', 'tags')

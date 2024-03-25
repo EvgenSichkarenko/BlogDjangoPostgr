@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{title}} :: {{block.super}}
+{% endblock %}
+
+
+{% block header %}
+{% endblock%}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4 ">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary" style="margin: 0 auto;">Register</button>
+            <a href="{% url 'login' %}"><input type="button" value="Sign in" class="btn btn-primary"></a>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

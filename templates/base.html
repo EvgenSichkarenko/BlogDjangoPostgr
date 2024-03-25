@@ -28,8 +28,28 @@
                         <h2><a href="{% url 'home' %}">Classic</a></h2>
                     </div>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-8">
                     {% menu_tpl %}
+                </div>
+                <div class="col-md-2 ">
+                    <div>
+                        {% if request.user.is_authenticated %}
+                         <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <h4 style="margin-top: 20px; display: block">
+                                    Welcome {{user.username}}
+                                    <button class="btn btn-primary "> Log out </button></h4>
+                            </form>
+                        {% else %}
+                        <div style="margin-top: 17px; display: block">
+                            <h4>
+                                <a href="{% url 'login' %}">Sign in</a> /
+                                <a href="{% url 'register' %}">Sign up</a>
+                            </h4>
+                        </div>
+                        {% endif %}
+                    </div>
+
                 </div>
             </div>
         </div>

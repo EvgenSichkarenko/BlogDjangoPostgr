@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, View
 from .models import Category, Posts, Tags, Quote
@@ -27,10 +28,19 @@ class CategoryView(DetailView):
         return context
 
 
-class PostsViews(DetailView):
-    template_name = 'blog/post.html'
-    model = Posts
-    context_object_name = 'post'
+class PostsViews(View):
+
+    def get(self, request, slug):
+        post = Posts.objects.get(slug=slug)
+        post.views = F('views') + 1
+        post.save()
+        post.refresh_from_db()
+
+        context = {
+            'post': post
+        }
+
+        return render(request, 'blog/post.html', context)
 
 
 class TagsViews(ListView):

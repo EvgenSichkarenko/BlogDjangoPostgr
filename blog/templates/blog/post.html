@@ -23,7 +23,7 @@
                                                 <h4><span>Category: <span class="author-name">
                                                     <a href="{{post.category.get_absolute_url}}">{{post.category}} </a></span></span>
                                                 </h4>
-                                                <h4><span>Views: <span>{{post.views}}</span></span>
+                                                <h4><span>Views: <span>{{ post.views }}</span></span>
                                                 </h4>
                                                 <h4><span>{{post.created_at}}</span></h4>
                                                 {% if post.tags.exists %}
@@ -56,4 +56,6 @@
         </div>
     </div>
 </section>
+{% endblock %}
+{% block footer %}
 {% endblock %}
