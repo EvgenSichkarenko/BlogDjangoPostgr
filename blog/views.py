@@ -1,7 +1,9 @@
+from django.contrib import messages
+from django.core.mail import send_mail
 from django.db.models import F
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
-from .models import Category, Posts, Tags, Quote
+from .models import Category, Posts, Tags, Quote, EmailSubs
 from .forms import EmailSubsForm
 
 
@@ -18,15 +20,50 @@ class Home(ListView):
         return context
 
 
-class CategoryView(DetailView):
-    template_name = 'blog/single.html'
-    model = Category
+class CategoryView(View):
+    def get(self, request, slug):
+        posts = Posts.objects.filter(category__slug=slug)
+        quotes = Quote.objects.filter(category__slug=slug)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['posts'] = Posts.objects.filter(category__slug=self.kwargs['slug'])
-        context['quotes'] = Quote.objects.filter(category__slug=self.kwargs['slug'])
-        return context
+        context = {
+            'posts': posts,
+            'quotes': quotes,
+            'form': EmailSubsForm(),
+        }
+        return render(request, 'blog/single.html', context)
+
+    def post(self, request, slug):
+        emails = EmailSubs.objects.all()
+        posts = Posts.objects.filter(category__slug=slug)
+        quotes = Quote.objects.filter(category__slug=slug)
+
+        if request.POST.get('email') not in emails:
+            if request.method == 'POST':
+                form = EmailSubsForm(request.POST)
+                if form.is_valid():
+                    form.save()
+                    mail = send_mail('Subscribe email notification Dartblog',
+                                     'Welcome dear friend and thank you for subscribe',
+                                     'evgen20@yahoo.com',
+                                     [form.cleaned_data.get('email')],
+                                     fail_silently=False, )
+                    if mail:
+                        messages.success(request, 'You are successful subscribe')
+                        # return redirect('home')
+                    else:
+                        messages.error(request, 'Operation is canceled')
+                else:
+                    messages.error(request, 'Form isn"t valid')
+            else:
+                messages.error(request, 'You are already subscribed')
+
+        context = {
+            'posts': posts,
+            'quotes': quotes,
+            'form': EmailSubsForm(),
+        }
+
+        return render(request, 'blog/single.html', context)
 
 
 class PostsViews(View):
@@ -38,17 +75,7 @@ class PostsViews(View):
         post.refresh_from_db()
 
         context = {
-            'post': post,
-            'form': EmailSubsForm()
-        }
-
-        return render(request, 'blog/post.html', context)
-
-    def post(self, request):
-
-        form = EmailSubsForm(request.POST)
-        context = {
-            'form': form
+            'post': post
         }
 
         return render(request, 'blog/post.html', context)

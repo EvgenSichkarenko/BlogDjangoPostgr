@@ -1,15 +1,15 @@
 <div class="newsletter">
     <h2 class="sidebar-title">Subscribe To oUR nEWSLETTER!</h2>
-    <form action="food" method="POST">
-        {% csrf_token %}
-<!--        {% if messages %}-->
-<!--        <ul class="messages">-->
-<!--            {% for message in messages %}-->
-<!--            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
-<!--            {% endfor %}-->
-<!--        </ul>-->
-<!--        {% endif %}-->
-        {{ form.as_p }}
-        <button class="btn  btn-primary">Subscribe</button>
-    </form>
+        <form action="{{ posts.get_absolute_url }}" method="POST">
+            {% csrf_token %}
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {{ form.email }}
+            <input type="submit" value="Subscribe" style="width:100%; margin-top:5px" >
+        </form>
 </div>

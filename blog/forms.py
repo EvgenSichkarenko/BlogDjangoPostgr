@@ -15,7 +15,10 @@ class Register(UserCreationForm):
 
 
 class EmailSubsForm(forms.ModelForm):
-    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'type': 'search',
+        'placeholder': 'Email'}))
 
     class Meta:
         model = EmailSubs
