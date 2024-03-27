@@ -1,0 +1,4 @@
+Django==5.0.2
+Django==5.0.3
+django_ckeditor==6.7.0
+django_ckeditor==6.7.1
