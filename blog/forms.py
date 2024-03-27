@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from blog.models import EmailSubs
+from blog.models import EmailSubs, Comments
 
 
 class Register(UserCreationForm):
@@ -18,8 +18,28 @@ class EmailSubsForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'class': 'form-control',
         'type': 'search',
-        'placeholder': 'Email'}))
+        'placeholder': 'Email'
+    }))
 
     class Meta:
         model = EmailSubs
         fields = ('email',)
+
+
+class CommentsForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'type': 'search',
+        'placeholder': 'Your name',
+        'style': 'margin-bottom:10px'
+    }))
+    context = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'type': 'search',
+        'placeholder': 'Message',
+        'style': 'margin-bottom:10px'
+    }))
+
+    class Meta:
+        model = Comments
+        fields = ('username', 'context')

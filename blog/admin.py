@@ -50,3 +50,8 @@ class QuoteAdmin(admin.ModelAdmin):
 @admin.register(EmailSubs)
 class EmailSubscribers(admin.ModelAdmin):
     list_display = ('email', 'created_at')
+
+
+@admin.register(Comments)
+class CommentsAdmin(admin.ModelAdmin):
+    list_display = ('username', 'context', 'created_at', 'category')

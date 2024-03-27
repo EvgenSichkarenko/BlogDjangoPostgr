@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
@@ -81,3 +82,14 @@ class EmailSubs(models.Model):
     class Meta:
         verbose_name = 'Подписчик'
         verbose_name_plural = 'Подписчики'
+
+
+class Comments(models.Model):
+    username = models.CharField(max_length=100, blank=True)
+    context = models.CharField(max_length=400, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        verbose_name = 'Коментар'
+        verbose_name_plural = 'Коментари'

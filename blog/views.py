@@ -3,8 +3,8 @@ from django.core.mail import send_mail
 from django.db.models import F
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
-from .models import Category, Posts, Tags, Quote, EmailSubs
-from .forms import EmailSubsForm
+from .models import Category, Posts, Tags, Quote, EmailSubs, Comments
+from .forms import EmailSubsForm, CommentsForm
 
 
 # Create your views here.
@@ -24,11 +24,18 @@ class CategoryView(View):
     def get(self, request, slug):
         posts = Posts.objects.filter(category__slug=slug)
         quotes = Quote.objects.filter(category__slug=slug)
-
+        category = Category.objects.get(slug=slug)
+        try:
+            comments = Comments.objects.filter(category__slug=slug)
+        except Comments.DoesNotExist:
+            comments = None
         context = {
             'posts': posts,
             'quotes': quotes,
+            'category': category,
+            'comments': comments,
             'form': EmailSubsForm(),
+            'form_com': CommentsForm()
         }
         return render(request, 'blog/single.html', context)
 
@@ -36,17 +43,24 @@ class CategoryView(View):
         emails = EmailSubs.objects.all()
         posts = Posts.objects.filter(category__slug=slug)
         quotes = Quote.objects.filter(category__slug=slug)
+        category = Category.objects.get(slug=slug)
 
         if request.POST.get('email') not in emails:
             if request.method == 'POST':
                 form = EmailSubsForm(request.POST)
+                form_com = CommentsForm(request.POST)
                 if form.is_valid():
                     form.save()
+                elif form_com.is_valid():
+                    comment = form_com.save(commit=False)
+                    comment.category = category
+                    comment.save()
                     mail = send_mail('Subscribe email notification Dartblog',
                                      'Welcome dear friend and thank you for subscribe',
                                      'evgen20@yahoo.com',
                                      [form.cleaned_data.get('email')],
                                      fail_silently=False, )
+
                     if mail:
                         messages.success(request, 'You are successful subscribe')
                         # return redirect('home')
@@ -60,7 +74,9 @@ class CategoryView(View):
         context = {
             'posts': posts,
             'quotes': quotes,
+            'category': category,
             'form': EmailSubsForm(),
+            'form_com': CommentsForm()
         }
 
         return render(request, 'blog/single.html', context)

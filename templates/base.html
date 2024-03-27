@@ -38,7 +38,9 @@
                                 {% csrf_token %}
                                 <h4 style="margin-top: 20px; display: block">
                                     Welcome {{user.username}}
-                                    <button class="btn btn-primary "> Log out </button></h4>
+                                    <button class="btn btn-primary "> Log out </button>
+                                </h4>
+                             <p><a href="{% url 'password_change' %}">Change password!</a></p>
                             </form>
                         {% else %}
                         <div style="margin-top: 17px; display: block">

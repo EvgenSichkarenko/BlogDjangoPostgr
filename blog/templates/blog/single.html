@@ -41,99 +41,40 @@
                             <hr>
                             <div class="commententries">
                                 <h3>Comments</h3>
-
+                                {% for comment in comments %}
                                 <ul class="commentlist">
                                     <li>
-                                        <article class="comment">
                                             <header class="comment-author">
                                                 <img src="{% static 'img/author-1.jpg' %}" alt="">
                                             </header>
+
                                             <section class="comment-details">
                                                 <div class="author-name">
-                                                    <h5><a href="#">Selina Gomez</a></h5>
-                                                    <p>February 25 2017</p>
+                                                    <h5><a href="#">{{ comment.username }}</a></h5>
+                                                    <p>{{ comment.created_at }}</p>
                                                 </div>
                                                 <div class="comment-body">
-                                                    <p>is simply dummy text of the printing and typesetting industry.
-                                                        Lorem Ipsum has been the industry's standard </p>
-                                                </div>
-                                                <div class="reply">
-                                                    <p><span><a href="#"><i class="fa fa-thumbs-up"
-                                                                            aria-hidden="true"></i></a>12</span><span><a
-                                                            href="#"><i class="fa fa-reply" aria-hidden="true"></i></a>7</span>
-                                                    </p>
+                                                    <p>{{ comment.context }}</p>
                                                 </div>
                                             </section>
-                                        </article>
 
-                                        <ul class="children">
-                                            <li>
-                                                <article class="comment">
-                                                    <header class="comment-author">
-                                                        <img src="{% static 'img/author-2.jpg' %}" alt="">
-                                                    </header>
-                                                    <section class="comment-details">
-                                                        <div class="author-name">
-                                                            <h5><a href="#">Khalid Hasan Zibon</a></h5>
-                                                            <p>February 25 2017</p>
-                                                        </div>
-                                                        <div class="comment-body">
-                                                            <p>is simply dummy text of the printing and typesetting
-                                                                industry. Lorem Ipsum has been the industry's
-                                                                standard </p>
-                                                        </div>
-                                                        <div class="reply">
-                                                            <p><span><a href="#"><i class="fa fa-thumbs-up"
-                                                                                    aria-hidden="true"></i></a>12</span><span><a
-                                                                    href="#"><i class="fa fa-reply"
-                                                                                aria-hidden="true"></i></a>7</span></p>
-                                                        </div>
-                                                    </section>
-                                                </article>
-                                            </li>
-                                        </ul>
-
-                                    </li>
-                                    <li>
-                                        <article class="comment">
-                                            <header class="comment-author">
-                                                <img src="{% static 'img/author-3.jpg' %}" alt="">
-                                            </header>
-                                            <section class="comment-details">
-                                                <div class="author-name">
-                                                    <h5><a href="#">Heath Ledger</a></h5>
-                                                    <p>February 25 2017</p>
-                                                </div>
-                                                <div class="comment-body">
-                                                    <p>is simply dummy text of the printing and typesetting industry.
-                                                        Lorem Ipsum has been the industry's standard </p>
-                                                </div>
-                                                <div class="reply">
-                                                    <p><span><a href="#"><i class="fa fa-thumbs-up"
-                                                                            aria-hidden="true"></i></a>12</span><span><a
-                                                            href="#"><i class="fa fa-reply" aria-hidden="true"></i></a>7</span>
-                                                    </p>
-                                                </div>
-                                            </section>
-                                        </article>
                                     </li>
                                 </ul>
-
+                                {% endfor %}
                             </div>
-                            <form action="#" method="get">
-                                <div class="name">
-                                    <input type="text" name="" placeholder="Name" class="name">
-                                </div>
-                                <div class="email">
-                                    <input type="email" name="" placeholder="Email" class="email">
-                                </div>
-                                <div class="comment">
-                                    <input type="text" name=""placeholder="Comment" class="comment">
-                                </div>
-                                <div class="post">
-                                    <input type="submit" value="Post">
-                                </div>
+                            {% if request.user.is_authenticated %}
+
+                            <form action="{% url 'category' category.slug %}" method="POST">
+                                {% csrf_token %}
+                                {{ form_com.username }}
+                                {{ form_com.context }}
+                                <input type="submit" value="Comment" style="width:100%" >
                             </form>
+                            {% else %}
+                            <div class="comment-body">
+                                <p>If you want to leave a comment, PLEASE <a href="{% url 'login' %}">SIGN IN</a></p>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-4">
